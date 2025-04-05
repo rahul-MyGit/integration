@@ -43,7 +43,7 @@ export const AirtableIntegration = ({ user, org, integrationParams, setIntegrati
             const formData = new FormData();
             formData.append('user_id', user);
             formData.append('org_id', org);
-            const response = await axios.post(`http://localhost:8000/integrations/airtable/credentials`, formData);
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/integrations/airtable/credentials`, formData);
             const credentials = response.data; 
             if (credentials) {
                 setIsConnecting(false);

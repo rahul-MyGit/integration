@@ -12,11 +12,18 @@ from integrations.integration_item import IntegrationItem
 
 from redis_client import add_key_value_redis, get_value_redis, delete_key_redis
 
-# Replace with your own HubSpot app credentials
-CLIENT_ID = 'your-hubspot-client-id'
-CLIENT_SECRET = 'your-hubspot-client-secret'
-REDIRECT_URI = 'http://localhost:8000/integrations/hubspot/oauth2callback'
-authorization_url = f'https://app.hubspot.com/oauth/authorize?client_id={CLIENT_ID}&redirect_uri={REDIRECT_URI}&scope=contacts%20content'
+CLIENT_ID = 'xxx'
+CLIENT_SECRET = 'xxx'
+
+
+REDIRECT_URI = 'XXX'
+authorization_url = f'XXX'
+
+encoded_client_id_secret = base64.b64encode(f'{CLIENT_ID}:{CLIENT_SECRET}'.encode()).decode()
+
+scope = 'oauth' 
+
+authorization_url = f'{authorization_url}&scope={scope}'
 
 async def authorize_hubspot(user_id, org_id):
     state_data = {
@@ -59,6 +66,7 @@ async def oauth2callback_hubspot(request: Request):
                     'code': code
                 },
                 headers={
+                    'Authorization': f'Basic {encoded_client_id_secret}',
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             ),
@@ -152,6 +160,7 @@ async def get_items_hubspot(credentials) -> list[IntegrationItem]:
                 create_integration_item_metadata_object(
                     company, 'Company'
                 )
+
             )
     
     # Fetch deals

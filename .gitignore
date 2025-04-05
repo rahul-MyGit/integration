@@ -9,5 +9,18 @@ node_modules
 
 .env.local
 
+.env.*.local
 
 .DS_Store
+
+venv/
+env/
+ENV/
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs
+*.log
+logs/
